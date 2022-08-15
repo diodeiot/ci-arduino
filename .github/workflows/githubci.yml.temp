@@ -1,0 +1,64 @@
+# @file githubci.yml
+# 
+# @brief Diode IoT Arduino Library CI Workflow.
+#  
+# @authors Diode IoT Inc. <info@diodeiot.com>
+# 
+# @authors Kadir Sevil <kadir.sevil@diodeiot.com>
+#   
+# @copyright Copyright (c) 2021-2022 Diode Iot Inc. All rights reserved.
+# 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+# 
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+# Directory Structure:
+# .
+# |__ workspace (all workflow files,except main repository files,will reside here)
+#     |__ ci (cloned arduino-ci repository)
+#     |__ code_docs (all doxygen related files)
+#         |__ [Main Repo (gh-pages checkout)]
+#         |   |__ html (generated doxygen files)
+#         |__ doxygen-1.9.4 (doxygen executables)
+          
+name: Arduino Library CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - uses: actions/checkout@v3
+    
+    - uses: actions/checkout@v3
+      with:
+         repository: diodeiot/ci-arduino
+         path: workspace/ci    
+    
+    - name: pre run
+      run: bash workspace/ci/pre_run.sh
+      
+    - name: clang-format
+      run: python3 workspace/ci/run-clang-format.py -e "workspace/*" -r .
+        
+    - name: doxygen
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #PRETTY_NAME: "NAME_HERE"
+        #DOC_LANG: "tr"
+      run: bash workspace/ci/doxygen_deploy.sh

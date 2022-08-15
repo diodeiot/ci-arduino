@@ -1,0 +1,69 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: ["Type: enhancement"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        * We welcome any ideas or feature requests! It is helpful if you can explain exactly why the feature would be useful.
+        * You can take a look to existing issues.
+  
+  - type: input
+    id: Area
+    attributes:
+      label: Related area
+      description: Please briefly explain the area of your feature request.
+      placeholder: eg. Board support, New functionality ...
+    validations:
+      required: true
+  
+  - type: input
+    id: HW
+    attributes:
+      label: Hardware specifications
+      description: Please provide if your proposal depends on specific hardware.
+      placeholder: eg. Support for ESP32, Uno ...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: problem-related
+    attributes:
+      label: Is your feature request related to a problem?
+      description: Please provide a clear and concise description of what the problem is. Add relevant issue link.
+      placeholder: eg. I'm facing the issue/missing function...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: Please provide a clear and concise description of what you want to happen.
+      placeholder: eg. When using this function...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: Please provide a clear and concise description of any alternative solutions or features you've considered.
+      placeholder: eg. Choosing other approach wouldn't work, because...
+  
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Please add any other context or screenshots about the feature request here.
+      placeholder: eg. This would work only when ...
+  
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: I have checked existing list of feature requests and the contribution guide
+      description: You agree to check all the resources above before opening a new feature request.
+      options:
+        - label: I confirm i have checked existing list of feature requests and contribution guide.
+          required: true
